@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Formulario from './components/Formulario';
+import axios from 'axios'
 
-function App() {
+const App = () => {
+
+  const [busquedaLetra, setBusquedaLetra] = useState({})
+  const [letra, setLetra] = useState('')
+
+  useEffect(() => {
+
+    if (Object.keys(busquedaLetra).length === 0) return
+
+    const consultarAPI = async () => {
+
+      const {artista, cancion} = busquedaLetra
+
+      const url = `https://api.lyrics.ovh/v1/${artista}/${cancion}`
+
+      const respuesta = await axios(url)
+
+      setLetra(respuesta.data.lyrics)
+
+    }
+    
+    consultarAPI()
+
+  }, [busquedaLetra])
+
   return (
     <div>
-      <Formulario />
+      <Formulario
+        setBusquedaLetra={setBusquedaLetra}
+      />
     </div>
   );
 }
