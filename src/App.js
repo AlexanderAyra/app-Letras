@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Formulario from './components/Formulario';
 import axios from 'axios'
+import Cancion from './components/Cancion';
 
 const App = () => {
 
@@ -32,6 +33,19 @@ const App = () => {
       <Formulario
         setBusquedaLetra={setBusquedaLetra}
       />
+
+      <div className="container mt-5">
+        <div className="row">
+          <div className="col-md-6">
+            Info
+          </div>
+          <div className="col-md-6">
+            <Cancion
+              letra={letra}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
