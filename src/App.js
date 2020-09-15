@@ -7,6 +7,7 @@ const App = () => {
 
   const [busquedaLetra, setBusquedaLetra] = useState({})
   const [letra, setLetra] = useState('')
+  const [info, setInfo] = useState({})
 
   useEffect(() => {
 
@@ -17,10 +18,15 @@ const App = () => {
       const {artista, cancion} = busquedaLetra
 
       const url = `https://api.lyrics.ovh/v1/${artista}/${cancion}`
+      const url2 = `https://theaudiodb.com/api/v1/json/1/search.php?s=${artista}`
 
-      const respuesta = await axios(url)
+      const [ letra, info ] = await Promise.all([
+        axios(url),
+        axios(url2)
+      ])
 
-      setLetra(respuesta.data.lyrics)
+      setLetra(letra.data.lyrics)
+      setInfos(info.data.artists[0]);
 
     }
     
